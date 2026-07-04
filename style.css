@@ -1,0 +1,513 @@
+/* ==========================================
+   Apex Traders Landing Page Stylesheet
+   Design: Premium, Dark Glassmorphism, Gold & Cyberpunk Accent
+   ========================================== */
+
+/* --- Reset & Base Variables --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-darkest: #030712;
+    --card-bg: rgba(8, 15, 30, 0.75);
+    --gold: #f59e0b; /* Golden tone for Gold Trading */
+    --gold-glow: rgba(245, 158, 11, 0.4);
+    --telegram-blue: #24a1de;
+    --telegram-glow: rgba(36, 161, 222, 0.5);
+    --emerald: #10b981; /* Bullish Forex green */
+    --rose: #f43f5e; /* Bearish Forex red */
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --text-dark: #6b7280;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-gold: rgba(245, 158, 11, 0.2);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-darkest);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Dynamic Canvas Background --- */
+#chart-bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+/* --- App Layout & Responsiveness --- */
+.app-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.landing-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    width: 100%;
+    max-width: 440px; /* Standard mobile landing page width */
+    border: 1px solid var(--border-color);
+    border-radius: 32px;
+    padding: 32px 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
+                0 0 80px rgba(8, 20, 52, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ambient glow inside the card top */
+.landing-card::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(36, 161, 222, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* --- Profile Header Section --- */
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    position: relative;
+}
+
+.profile-avatar-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, var(--telegram-blue) 0%, var(--gold) 50%, var(--bg-darkest) 100%);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(36, 161, 222, 0.2);
+    animation: avatarGlow 6s ease-in-out infinite alternate;
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #000;
+}
+
+.verified-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 26px;
+    height: 26px;
+    background: #0084ff;
+    border: 3px solid #080f25;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 132, 255, 0.5);
+}
+
+.verified-badge svg {
+    width: 14px;
+    height: 14px;
+}
+
+.brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.brand-subtitle {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--telegram-blue);
+    background: linear-gradient(90deg, #38bdf8 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px rgba(56, 189, 248, 0.2);
+}
+
+.expert-badge-container {
+    margin-top: -4px;
+}
+
+.expert-badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #38bdf8;
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    padding: 6px 14px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    box-shadow: inset 0 1px 10px rgba(14, 165, 233, 0.05);
+}
+
+/* --- Stats Row Section --- */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.stat-box {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 14px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.stat-box.highlight {
+    border-color: var(--border-gold);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(15, 23, 42, 0.4) 100%);
+}
+
+.stat-box.highlight .stat-value {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-dark);
+}
+
+/* --- Call To Action Button --- */
+.cta-section {
+    width: 100%;
+}
+
+.join-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #0088cc 0%, #24a1de 50%, #00b2ff 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    padding: 18px 24px;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 30px var(--telegram-glow),
+                0 0 0 2px rgba(255, 255, 255, 0.08) inset;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: buttonPulse 2.5s infinite;
+}
+
+.join-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(36, 161, 222, 0.7);
+}
+
+.join-btn:active {
+    transform: translateY(1px) scale(0.99);
+}
+
+.tg-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tg-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Shiny overlay effect on button */
+.join-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-25deg);
+    animation: buttonShine 4s infinite ease-in-out;
+}
+
+/* --- Features Bullet List --- */
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px;
+    border-radius: 16px;
+    transition: background 0.2s ease;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.feature-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.feature-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Feature specific gradients & colors */
+.bg-chart {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--emerald);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.bg-graduation {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.bg-lightning {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--gold);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.feature-text h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.feature-text p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* --- Trust Badges Section --- */
+.trust-badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.trust-badge {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 6px 12px;
+    border-radius: 50px;
+}
+
+/* --- Card Footer Section --- */
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    margin-top: 4px;
+}
+
+.footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--text-dark);
+}
+
+.footer-handle {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.footer-dot {
+    opacity: 0.5;
+}
+
+.footer-agency {
+    display: inline-block;
+}
+
+.agency-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 16px;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.disclaimer-text {
+    font-size: 0.62rem;
+    color: var(--text-dark);
+    line-height: 1.4;
+    max-width: 90%;
+    margin-top: 6px;
+}
+
+/* --- Custom Keyframes & Animations --- */
+@keyframes avatarGlow {
+    0% {
+        border-color: var(--telegram-blue);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(36, 161, 222, 0.2);
+    }
+    50% {
+        border-color: var(--gold);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 25px rgba(245, 158, 11, 0.3);
+    }
+    100% {
+        border-color: var(--emerald);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+}
+
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 0 8px 30px var(--telegram-glow), 0 0 0 0px rgba(36, 161, 222, 0.4);
+    }
+    70% {
+        box-shadow: 0 8px 30px var(--telegram-glow), 0 0 0 12px rgba(36, 161, 222, 0);
+    }
+    100% {
+        box-shadow: 0 8px 30px var(--telegram-glow), 0 0 0 0px rgba(36, 161, 222, 0);
+    }
+}
+
+@keyframes buttonShine {
+    0% {
+        left: -150%;
+    }
+    50% {
+        left: 150%;
+    }
+    100% {
+        left: 150%;
+    }
+}
+
+/* --- Media Queries for Perfect Frame Representation --- */
+@media (max-width: 480px) {
+    .app-wrapper {
+        padding: 0;
+    }
+    
+    .landing-card {
+        border-radius: 0;
+        border: none;
+        min-height: 100vh;
+        max-width: 100%;
+        padding: 40px 20px;
+        background: radial-gradient(circle at top, rgba(16, 26, 60, 0.95) 0%, rgba(3, 7, 18, 1) 100%);
+    }
+}
+
+/* Smooth zoom-in loading effect for card content */
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.landing-card {
+    animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
