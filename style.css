@@ -236,6 +236,47 @@ body {
 /* --- Call To Action Button --- */
 .cta-section {
     width: 100%;
+}/* --- Redirect Timer Styling --- */
+.redirect-timer-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.timer-message {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.timer-message strong {
+    color: var(--gold);
+    font-size: 0.95rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.progress-bar-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--telegram-blue) 100%);
+    border-radius: 50px;
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.1s linear;
 }
 
 .join-btn {
@@ -248,10 +289,10 @@ body {
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: 0.5px;
-    padding: 18px 24px;
-    border-radius: 18px;
+    font-size: 1.22rem; /* Larger font size */
+    letter-spacing: 0.8px;
+    padding: 22px 28px; /* Larger padding */
+    border-radius: 20px; /* Larger border radius */
     border: none;
     cursor: pointer;
     box-shadow: 0 8px 30px var(--telegram-glow),
@@ -278,10 +319,9 @@ body {
 }
 
 .tg-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 26px; /* Larger icon */
+    height: 26px; /* Larger icon */
 }
-
 /* Shiny overlay effect on button */
 .join-btn::after {
     content: '';
@@ -484,6 +524,7 @@ body {
 @media (max-width: 480px) {
     .app-wrapper {
         padding: 0;
+        align-items: flex-start; /* Allow scroll on small devices */
     }
     
     .landing-card {
@@ -491,8 +532,64 @@ body {
         border: none;
         min-height: 100vh;
         max-width: 100%;
-        padding: 40px 20px;
+        padding: 24px 16px;
         background: radial-gradient(circle at top, rgba(16, 26, 60, 0.95) 0%, rgba(3, 7, 18, 1) 100%);
+        gap: 20px; /* Reduced gap to save height space on mobile */
+    }
+
+    .profile-avatar-wrapper {
+        width: 90px; /* Sized down slightly for mobile */
+        height: 90px;
+    }
+
+    .brand-title {
+        font-size: 1.6rem;
+    }
+
+    .expert-badge {
+        font-size: 0.74rem;
+        padding: 4px 12px;
+    }
+
+    .stat-box {
+        padding: 10px 4px;
+        border-radius: 12px;
+    }
+
+    .stat-value {
+        font-size: 1.05rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    .join-btn {
+        font-size: 1.15rem; /* Still massive, but adjusted for mobile widths */
+        padding: 18px 24px;
+    }
+
+    .feature-item {
+        padding: 8px;
+        gap: 12px;
+    }
+
+    .feature-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .feature-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .feature-text h3 {
+        font-size: 0.88rem;
+    }
+
+    .feature-text p {
+        font-size: 0.75rem;
     }
 }
 

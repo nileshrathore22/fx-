@@ -8,53 +8,70 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Meta Pixel Click Tracking with Safe Redirect
     // -----------------------------------------------------------------
     const joinBtn = document.getElementById('join-tg-btn');
+    const countdownSec = document.getElementById('countdown-sec');
+    const progressBarFill = document.getElementById('progress-bar-fill');
 
     if (joinBtn) {
-        joinBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Pause standard navigation
-            const targetUrl = joinBtn.href;
+        const targetUrl = joinBtn.href;
+        let redirected = false;
+        const totalDuration = 15; // 15 seconds timer
+        let timeLeft = totalDuration;
 
-            // Flag to track if we've already redirected
-            let redirected = false;
+        // Perform redirect action
+        const performRedirect = (isManual = false) => {
+            if (redirected) return;
+            redirected = true;
 
-            // Fallback redirect function (if Pixel takes too long or fails)
-            const performRedirect = () => {
-                if (!redirected) {
-                    redirected = true;
-                    window.open(targetUrl, '_blank');
-                }
-            };
+            // Clear active countdown interval
+            clearInterval(timerInterval);
 
-            // Set safety timeout (350ms max delay for pixel tracking beacon)
-            const timeoutId = setTimeout(performRedirect, 350);
-
+            // Fire Meta Pixel tracking event
             try {
-                // Fire Meta Pixel tracking event for "Lead"
                 if (typeof fbq === 'function') {
                     console.log('Firing Meta Pixel Lead event...');
                     fbq('track', 'Lead', {
                         content_name: 'Apex Traders Telegram Channel',
-                        content_category: 'Forex & Gold Channel Join'
-                    }, {
-                        // Meta Pixel callback once event is successfully sent
-                        eventID: 'lead_' + Date.now()
+                        content_category: 'Forex & Gold Channel Join',
+                        method: isManual ? 'manual_click' : 'auto_redirect'
                     });
-                    
-                    // Allow small window for beacon delivery before redirecting
-                    setTimeout(() => {
-                        clearTimeout(timeoutId);
-                        performRedirect();
-                    }, 250);
-                } else {
-                    console.warn('Meta Pixel (fbq) not loaded. Redirecting...');
-                    clearTimeout(timeoutId);
-                    performRedirect();
                 }
             } catch (error) {
-                console.error('Error tracking pixel conversion:', error);
-                clearTimeout(timeoutId);
-                performRedirect();
+                console.error('Error tracking pixel event:', error);
             }
+
+            // Redirect flow:
+            // Mobile compatibility: Auto-redirects MUST use window.location.href to bypass popup blockers.
+            // Manual clicks can open in a new tab if preferred.
+            if (isManual) {
+                window.open(targetUrl, '_blank');
+            } else {
+                window.location.href = targetUrl;
+            }
+        };
+
+        // Smooth 100ms interval for fluid progress bar transition
+        const timerInterval = setInterval(() => {
+            timeLeft -= 0.1;
+            
+            if (timeLeft <= 0) {
+                timeLeft = 0;
+                clearInterval(timerInterval);
+                performRedirect(false); // auto-redirect
+            }
+
+            // Update UI elements
+            if (countdownSec) {
+                countdownSec.textContent = Math.ceil(timeLeft);
+            }
+            if (progressBarFill) {
+                progressBarFill.style.transform = `scaleX(${timeLeft / totalDuration})`;
+            }
+        }, 100);
+
+        // Click event listener
+        joinBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            performRedirect(true); // manual click redirect
         });
     }
 
