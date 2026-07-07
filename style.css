@@ -460,6 +460,18 @@ body {
     display: inline-block;
 }
 
+.agency-badge-link {
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.agency-badge-link:hover .agency-badge {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+    color: var(--gold);
+}
+
 .agency-badge {
     font-size: 0.7rem;
     font-weight: 700;

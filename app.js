@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (joinBtn) {
         const targetUrl = joinBtn.href;
         let redirected = false;
-        const totalDuration = 15; // 15 seconds timer
+        const totalDuration = 10; // 10 seconds timer
         let timeLeft = totalDuration;
 
         // Perform redirect action
